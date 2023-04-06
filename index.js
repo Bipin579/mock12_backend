@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const connection = require('./config/db');
 const userRoute = require('./routes/userRoute');
-const calcRoute = require('./routes/calculateRoute');
+const hospital = require('./routes/hospitalRoute');
+
 require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 
@@ -11,14 +12,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/user", userRoute);
-app.use(calcRoute);
+app.use("/hospital", hospital);
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
 
-app.listen(PORT, async() => { 
+app.listen(PORT, async () => {
     try {
         await connection;
         console.log("DB-started");
@@ -26,5 +28,5 @@ app.listen(PORT, async() => {
         console.log(error);
     }
     console.log(`Server is running at http://localhost:${PORT}`);
-})
+});
 
