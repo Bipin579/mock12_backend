@@ -2,7 +2,6 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const userModel = require('../model/userModel');
 const jwt = require("jsonwebtoken");
-const authorization = require('../middleware/authMiddleware');
 require("dotenv").config();
 
 const userRoute = express.Router();
@@ -15,7 +14,7 @@ userRoute.post('/register', async (req, res) => {
         bcrypt.hash(password, 5, async (err, hash) => {
             if (err) res.json({ msg: "Something went wrong", success: false });
             else {
-                const user = new userModel({ name, email, password: hash });
+                const user = new userModel({ email, password: hash });
                 await user.save();
                 res.json({ msg: "User registered successfully", success: true });
             }
