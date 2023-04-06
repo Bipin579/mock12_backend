@@ -10,7 +10,7 @@ const userRoute = express.Router();
 
 
 userRoute.post('/register', async (req, res) => {
-    let { name, email, password } = req.body;
+    let { email, password } = req.body;
     try {
         bcrypt.hash(password, 5, async (err, hash) => {
             if (err) res.json({ msg: "Something went wrong", success: false });
@@ -45,18 +45,6 @@ userRoute.post("/login", async (req, res) => {
 });
 
 
-userRoute.get("/getProfile", authorization, async (req, res) => {
-    console.log(req.body.user)
-    try {
-        const user = await userModel.findOne({ _id: req.body.user });
-        if (user) {
-            res.json({ user, success: true });
-        } else {
-            res.json({ msg: "Invalid user", success: false });
-        }
-    } catch (error) {
-        res.json({ msg: "Something went wrong", success: false });
-    }
-});
+
 
 module.exports = userRoute;
