@@ -12,9 +12,10 @@ const routes = require("./routes/userRoute");
 const secureRoute = require("./routes/secure-routes");
 
 app.use(cors({
-  origin: 'https://tummoc-assignment.vercel.app',
+  origin: ['https://tummoc-assignment.vercel.app', 'http://localhost:3000'],
   credentials: true
 }));
+
 app.use(passport.initialize());
 require("./middleware/passport.middleware.js");
 
