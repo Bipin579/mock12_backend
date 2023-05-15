@@ -76,28 +76,28 @@ passport.use(
   )
 );
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000"
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        const user = await UserModel.findOne({ googleId: profile.id });
-        if (user) {
-          return done(null, user);
-        }
-        const newUser = await UserModel.create({
-          googleId: profile.id,
-          displayName: profile.displayName,
-          email: profile.emails[0].value
-        });
-        return done(null, newUser);
-      } catch (error) {
-        done(error);
-      }
-    }
-  )
-);
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: process.env.GOOGLE_CLIENT_ID,
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//       callbackURL: "http://localhost:3000"
+//     },
+//     async (accessToken, refreshToken, profile, done) => {
+//       try {
+//         const user = await UserModel.findOne({ googleId: profile.id });
+//         if (user) {
+//           return done(null, user);
+//         }
+//         const newUser = await UserModel.create({
+//           googleId: profile.id,
+//           displayName: profile.displayName,
+//           email: profile.emails[0].value
+//         });
+//         return done(null, newUser);
+//       } catch (error) {
+//         done(error);
+//       }
+//     }
+//   )
+// );
