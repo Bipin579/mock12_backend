@@ -3,7 +3,7 @@ const localStrategy = require("passport-local").Strategy;
 const UserModel = require("../model/userModel");
 const JWTstrategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
 
 passport.use(
   "signup",
@@ -60,44 +60,4 @@ passport.use(
   )
 );
 
-passport.use(
-  new JWTstrategy(
-    {
-      secretOrKey: "TOP_SECRET",
-      jwtFromRequest: ExtractJWT.fromUrlQueryParameter("secret_token"),
-    },
-    async (token, done) => {
-      try {
-        return done(null, token.user);
-      } catch (error) {
-        done(error);
-      }
-    }
-  )
-);
 
-// passport.use(
-//   new GoogleStrategy(
-//     {
-//       clientID: process.env.GOOGLE_CLIENT_ID,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//       callbackURL: "http://localhost:3000"
-//     },
-//     async (accessToken, refreshToken, profile, done) => {
-//       try {
-//         const user = await UserModel.findOne({ googleId: profile.id });
-//         if (user) {
-//           return done(null, user);
-//         }
-//         const newUser = await UserModel.create({
-//           googleId: profile.id,
-//           displayName: profile.displayName,
-//           email: profile.emails[0].value
-//         });
-//         return done(null, newUser);
-//       } catch (error) {
-//         done(error);
-//       }
-//     }
-//   )
-// );
