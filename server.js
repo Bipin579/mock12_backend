@@ -23,6 +23,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", routes);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to Tummoc")
+});
+
 // Plug in the JWT strategy as a middleware so only verified users can access this route.
 app.use("/user", passport.authenticate("jwt", { session: false }), secureRoute);
 
